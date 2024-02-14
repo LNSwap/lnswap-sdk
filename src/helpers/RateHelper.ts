@@ -3,6 +3,25 @@ import { unwrapResponse } from 'clarity-codegen';
 import { readonlyCall } from '../utils/readonlyCallExecutor';
 import { Currency } from '../currency';
 import { AlexSDK } from '../alexSDK';
+import { getPairs } from '../utils/tokenlist';
+
+export const getSwapRate = async (
+  tokenX: Currency,
+  tokenY: Currency,
+  amount: bigint
+): Promise<bigint> => {
+  console.log('getSwapRate', tokenX, tokenY, amount);
+  const tokens: any = await getPairs();
+  // TODO: Only BTC/STX enabled for now
+  let swapRate = BigInt(0);
+  Object.keys(tokens).forEach((pair) => {
+    const rate: number = tokens[pair].rate;
+    if (pair === `BTC/STX`) {
+      swapRate = BigInt(Math.floor(tokens[pair].rate));
+    }
+  });
+  return swapRate;
+}
 
 export const getYAmountFromXAmount = async (
   tokenX: Currency,
