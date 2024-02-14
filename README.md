@@ -1,3 +1,23 @@
+# LNSwap-SDK
+LNSwap-SDK is a fork of Alex-SDK that exposes LNSwap.org API for consumption in client-side applications such as browser wallets.
+
+## Supported Currencies
+
+The SDK supports the following currencies:
+
+```javascript
+export enum Currency {
+  LN_BTC = "ln-btc",
+  STX = 'token-wstx',
+}
+```
+
+
+
+
+
+-----------------------------------
+Forked from:
 # Alex-SDK
 
 Alex-SDK is a easy-to-use library that exposes the swap functionality from [alexlab.co](https://app.alexlab.co/swap) to be integrated into any app or wallet. It enables users to perform swaps with a wide variety of supported currencies.
