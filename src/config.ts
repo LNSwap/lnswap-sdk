@@ -2,7 +2,9 @@ import { Currency } from './currency';
 
 const CONTRACT_DEPLOYER = 'SP3K8BC0PPEVCV7NZ6QSRWPQ2JE9E5B6N3PA0KBR9';
 const API_HOST = 'https://stacks-blockchain-lb.alexlab.co';
-const IS_MAINNET = true;
+// const IS_MAINNET = process.env.WALLET_ENVIRONMENT === 'development' ? false : true;
+// console.log('IS_MAINNET', IS_MAINNET);
+const IS_MAINNET = false;
 const SPONSORED_TX_EXECUTOR = 'https://sponsor-tx.alexlab.co/v1/graphql';
 
 const NATIVE_TOKEN_MAPPING: {
@@ -109,6 +111,10 @@ const NATIVE_TOKEN_MAPPING: {
   [Currency.BRC20_ORDG]: {
     decimals: 1e8,
     assetIdentifier: `SP3K8BC0PPEVCV7NZ6QSRWPQ2JE9E5B6N3PA0KBR9.brc20-ordg::brc20-ordg`,
+  },
+  [Currency.LN_BTC]: {
+    decimals: 1e8,
+    assetIdentifier: `not.applicable::not.applicable`,
   },
 };
 

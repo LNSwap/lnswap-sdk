@@ -2,8 +2,8 @@ import { Currency } from './currency';
 import { getLiquidityProviderFee } from './helpers/FeeHelper';
 import { AMMSwapPool } from './utils/ammPool';
 import { getRoute } from './helpers/RouteHelper';
-import { getYAmountFromXAmount } from './helpers/RateHelper';
-import { runSpot, TxToBroadCast } from './helpers/SwapHelper';
+import { getSwapRate } from './helpers/RateHelper';
+import { createSwap, TxToBroadCast } from './helpers/SwapHelper';
 import {
   fetchBalanceForAccount,
   findCurrencyByNativeAddress,
@@ -50,12 +50,10 @@ export class AlexSDK {
     fromAmount: bigint,
     to: Currency
   ): Promise<bigint> {
-    return getYAmountFromXAmount(
+    return getSwapRate(
       from,
       to,
-      fromAmount,
-      AMMSwapPool.ammTokens,
-      AMMSwapPool.ammV1_1Tokens
+      fromAmount
     );
   }
 
@@ -66,17 +64,25 @@ export class AlexSDK {
     fromAmount: bigint,
     minDy: bigint,
     router: Currency[]
-  ): TxToBroadCast {
-    return runSpot(
+  ): any {
+    console.log('runSwap', stxAddress, currencyX, currencyY, fromAmount, minDy, router);
+    return createSwap(
       stxAddress,
       currencyX,
       currencyY,
       fromAmount,
-      minDy,
-      router,
-      AMMSwapPool.ammTokens,
-      AMMSwapPool.ammV1_1Tokens
     );
+
+    // return runSpot(
+    //   stxAddress,
+    //   currencyX,
+    //   currencyY,
+    //   fromAmount,
+    //   minDy,
+    //   router,
+    //   AMMSwapPool.ammTokens,
+    //   AMMSwapPool.ammV1_1Tokens
+    // );
   }
 
   getCurrencyFrom(address: string): Currency | undefined {
