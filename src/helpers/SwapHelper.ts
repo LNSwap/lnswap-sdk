@@ -51,6 +51,41 @@ const composeTx: <
   };
 };
 
+export const createSwap = async (
+  stxAddress: string,
+  currencyX: Currency,
+  currencyY: Currency,
+  fromAmount: bigint,
+): Promise<any> => {
+  console.log('createSwap', stxAddress, currencyX, currencyY, fromAmount);
+  const apiUrl = configs.IS_MAINNET ? 'https://api.lnswap.org:9007/createswap' : 'https://testnet.lnswap.org:9007/createswap';
+  const swap = await fetch(apiUrl, 
+    {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: "POST",
+      body: JSON.stringify({
+        type: "submarine",
+        pairId: "BTC/STX",
+        orderSide: "buy",
+        invoice: stxAddress, // invoice goes here for stx -> btc
+        refundPublicKey: "0312bbaf30c834d5823fc4080d88260daa3e5b5e7bd6e4c219f6c7cc15878fd3cf",
+        channel: {
+            auto: true,
+            private: false,
+            inboundLiquidity: 50
+        },
+        maxFeePercent: "5"
+      })
+    }
+  );
+  const swapData = await swap.json();
+  console.log('swapData', swapData);
+  return swapData;
+};
+
 export function runSpot(
   stxAddress: string,
   currencyX: Currency,
