@@ -22,4 +22,5 @@ export enum Currency {
   GUS = "token-wgus",
   BRC20_ORDG = "brc20-ordg",
   BRC20_ORMM = "brc20-ormm",
+  LN_BTC = "ln-btc",
 }
